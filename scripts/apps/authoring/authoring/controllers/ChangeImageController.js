@@ -21,6 +21,13 @@ export function ChangeImageController($scope, gettext, notify, modal, _, api, $r
     $scope.validator = config.validatorMediaMetadata;
     let sizes = {};
 
+    $scope.controls = {
+        brightness: 1,
+        contrast: 1,
+        grayscale: 0,
+        rotate: 0
+    };
+
     $scope.data.renditions.forEach((rendition) => {
         let original = $scope.data.item.renditions.original;
         // only extend the item renditions if the original image can fit the rendition dimensions
