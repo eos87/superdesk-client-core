@@ -1030,6 +1030,26 @@
     }
 }
 
+.sd-photo-preview__edit-mode {
+    .sd-photo-preview__image {
+        text-align: left;
+    }
+}
+
+.sd-photo-preview__image {
+    .jcrop-holder img {
+        max-width: none;
+        max-height: none;
+    }
+}
+
+.sd-grid-item .sd-grid-item__thumb {
+    .jcrop-holder img {
+        max-width: none;
+        max-height: none;
+    }
+}
+
 .preview-modal-control { // toggle for preview dialog
     .preview-toggle {
         z-index: 100;
