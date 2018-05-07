@@ -5,12 +5,14 @@
         <a class="btn btn--primary" ng-click="done()" ng-disabled="!saveIsEnabled()">Save</a>
     </div>
 
-    <h3 class="modal__heading modal__heading--no-grow">{{ :: data.editable ? activity.label : 'View Crop' | translate }}</h3>
+    <h3 class="modal__heading modal__heading--no-grow" ng-if="!nav || nav === 'view'">{{ :: activity.label }}</h3>
+    <h3 class="modal__heading modal__heading--no-grow" ng-if="nav === 'image-edit'">{{ :: 'Edit image' | translate }}</h3>
+    <h3 class="modal__heading modal__heading--no-grow" ng-if="nav === 'crop'">{{ :: 'Edit Crops' | translate }}</h3>
 
-    <div class="modal__header-buttons  modal__header-buttons--center modal__header-element-grow button-nav" ng-init="nav = 'view'; showMetadata = true">
-        <button class="button-nav__btn" ng-click="nav = 'view'; showMetadata = true" ng-class="{'button-nav__btn--active' : nav === 'view'}" ng-disabled="isAoISelectionModeEnabled" translate>Details</button>
-        <button class="button-nav__btn" ng-click="nav = 'image-edit'; showMetadata = true" ng-class="{'button-nav__btn--active': nav === 'image-edit'}" ng-disabled="isAoISelectionModeEnabled" translate>Edit image</button>
-        <button class="button-nav__btn" ng-click="nav = 'crop'; showMetadata = false" ng-class="{'button-nav__btn--active': nav === 'crop'}" ng-disabled="isAoISelectionModeEnabled" translate>Edit crops</button>
+    <div class="modal__header-buttons  modal__header-buttons--center modal__header-element-grow button-nav">
+        <button class="button-nav__btn" ng-click="nav = 'view'; showMetadata = true" ng-class="{'button-nav__btn--active' : !nav || nav === 'view'}" ng-disabled="isAoISelectionModeEnabled" translate>Details</button>
+        <button class="button-nav__btn" ng-click="nav = 'image-edit'; showMetadata = true" ng-show="data.editable" ng-class="{'button-nav__btn--active': nav === 'image-edit'}" ng-disabled="isAoISelectionModeEnabled" translate>Edit image</button>
+        <button class="button-nav__btn" ng-click="nav = 'crop'; showMetadata = false" ng-show="data.editable" ng-class="{'button-nav__btn--active': nav === 'crop'}" ng-disabled="isAoISelectionModeEnabled" translate>Edit crops</button>
     </div>
 
     <div class="modal__header-buttons modal__header-buttons--right">
@@ -24,7 +26,7 @@
             <a class="sd-photo-preview__slide-in-button" ng-show="!showMetadata" ng-click="showMetadata = !showMetadata" data-sd-tooltip="Open metadata" data-flow="left">
                 <i class="icon-backward-thin"></i>
             </a>
-            <div class="sd-photo-preview" ng-if="nav === 'view'">
+            <div class="sd-photo-preview" ng-if="!nav || nav === 'view'">
                 <div class="sd-photo-preview__image">
                     <img ng-src="{{data.item.renditions.original.href}}">
                 </div>
