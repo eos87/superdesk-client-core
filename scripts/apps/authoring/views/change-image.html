@@ -32,13 +32,7 @@
 
             <div class="sd-photo-preview sd-photo-preview__edit-mode" ng-if="nav === 'image-edit'">
                 <div class="sd-photo-preview__image">
-                    <label ng-if="isAoISelectionModeEnabled" class="field-label">
-                        <span translate>New size</span>
-                        <span class="size">
-                            {{ areaOfInterestData.CropRight - areaOfInterestData.CropLeft}}
-                            x {{ areaOfInterestData.CropBottom - areaOfInterestData.CropTop}}
-                        </span>
-                    </label>
+
                     <div class="modal-body__flex-loader" ng-if="loaderForAoI"></div>
                     <div sd-image-crop
                          data-show-min-size-error="true"
@@ -58,24 +52,30 @@
                         ng-if="!isAoISelectionModeEnabled && !loaderForAoI">
                     </sd-image-modify>
 
+                    <label ng-if="isAoISelectionModeEnabled" class="sd-photo-preview__label">
+                        <span translate>New size</span>
+                        <span class="size">
+                            {{ areaOfInterestData.CropRight - areaOfInterestData.CropLeft}}
+                            x {{ areaOfInterestData.CropBottom - areaOfInterestData.CropTop}}
+                        </span>
+                    </label>
                 </div>
             </div>
             <div class="sd-photo-preview sd-photo-preview__edit-mode" ng-if="nav === 'crop'">
                 <div class="sd-photo-preview__image" ng-if="!selectedRendition">
-                    <label class="field-label">
-                        <span translate>Original</span>
-                        <span class="size">
-                            {{ data.item.renditions.original.width}} x {{ data.item.renditions.original.height}}
-                        </span>
-                    </label>
                     <sd-image-point
                         data-src="data.item.renditions.viewImage.href"
                         data-poi="data.poi"
                         data-on-change="data.isDirty = true">
                     </sd-image-point>
+                    <label class="sd-photo-preview__label">
+                        <span translate>Original</span>
+                        <span class="size">
+                            {{ data.item.renditions.original.width}} x {{ data.item.renditions.original.height}}
+                        </span>
+                    </label>
                 </div>
-                <div class="crop-area selected" ng-if="selectedRendition">
-                    <label class="field-label">{{ selectedRendition.name}}</label>
+                <div class="crop-area sd-photo-preview__image selected" ng-if="selectedRendition">
                     <div sd-image-crop
                          data-show-Min-Size-Error="true"
                          data-src="data.item.renditions.viewImage.href"
@@ -84,6 +84,7 @@
                          data-crop-data="data.cropData[selectedRendition.name]"
                          data-on-change="onChange(renditionName, cropData)">
                     </div>
+                    <label class="sd-photo-preview__label">{{ selectedRendition.name}}</label>
                 </div>
 
                 <div class="sd-photo-preview__thumb-strip">
