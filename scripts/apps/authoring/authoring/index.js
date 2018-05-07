@@ -211,7 +211,7 @@ angular.module('superdesk.apps.authoring', [
                 }],
             })
             .activity('edit.crop', {
-                label: gettext('Edit Crop'),
+                label: gettext('Details'),
                 modal: true,
                 cssClass: 'modal--fullscreen modal--dark-ui',
                 controller: ctrl.ChangeImageController,
