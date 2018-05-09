@@ -64,20 +64,22 @@
                 </div>
             </div>
             <div class="sd-photo-preview sd-photo-preview__edit-mode" ng-if="nav === 'crop'">
-                <div class="sd-photo-preview__image" ng-if="!selectedRendition">
+                <div class="sd-photo-preview__image--with-strip" ng-if="!selectedRendition">
                     <sd-image-point
                         data-src="data.item.renditions.viewImage.href"
                         data-poi="data.poi"
                         data-on-change="data.isDirty = true">
                     </sd-image-point>
-                    <label class="sd-photo-preview__label">
-                        <span translate>Original</span>
-                        <span class="size">
-                            {{ data.item.renditions.original.width}} x {{ data.item.renditions.original.height}}
-                        </span>
-                    </label>
+                    <div>
+                        <label class="sd-photo-preview__label">
+                            <span translate>Original</span>
+                            <span class="size">
+                                {{ data.item.renditions.original.width}} x {{ data.item.renditions.original.height}}
+                            </span>
+                        </label>
+                    </div>
                 </div>
-                <div class="crop-area sd-photo-preview__image selected" ng-if="selectedRendition">
+                <div class="crop-area selected sd-photo-preview__image--with-strip" ng-if="selectedRendition">
                     <div sd-image-crop
                          data-show-Min-Size-Error="true"
                          data-src="data.item.renditions.viewImage.href"
@@ -86,7 +88,9 @@
                          data-crop-data="data.cropData[selectedRendition.name]"
                          data-on-change="onChange(renditionName, cropData)">
                     </div>
-                    <label class="sd-photo-preview__label">{{ selectedRendition.name}}</label>
+                    <div>
+                        <label class="sd-photo-preview__label">{{ selectedRendition.name}}</label>
+                    </div>
                 </div>
 
                 <div class="sd-photo-preview__thumb-strip">

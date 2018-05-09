@@ -1036,8 +1036,43 @@
         align-items: center;
         justify-content: center;
         flex-direction: column;
+        &--with-strip {
+            display: block;
+            height:100%;
+            text-align: center;
+            .sd-photo-preview__label {
+                display: inline-block;
+            }
+            sd-image-point, div[sd-image-crop] {
+                display: inline-block !important;
+            }
+        }
     }
 }
+// .sd-photo-preview__image--with-strip
+
+
+.sd-grid-item .sd-grid-item__thumb > div {
+    position: relative;
+    flex-grow: 0;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+    width: 100%;
+    height: 14rem;
+    overflow: hidden;
+    text-align: center;
+}
+.sd-grid-item .sd-grid-item__thumb > sd-image-point {
+    text-align: center;
+    display: inline-block;
+    padding: 0;
+    height: 14rem;
+    overflow: hidden;
+}
+
 
 .sd-photo-preview__image {
     display: flex;
@@ -1054,7 +1089,13 @@
         max-width: none;
         max-height: none;
     }
+    &--with-strip {
+        display: block;
+        height:100%;
+        text-align: center;
+    }
 }
+
 .sd-photo-preview__label {
     background: rgba(0, 0, 0, 0.75);
     color: inherit;
@@ -1485,8 +1526,11 @@ feature-image {
     }
 }
 .field.media-item {
-    video, audio, img {
+    video, audio {
         box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25), 0 0 1px 1px rgba(0, 0, 0, 0.12);
+        max-width: 100%;
+    }
+    img {
         max-width: 100%;
     }
     video {
@@ -1497,6 +1541,30 @@ feature-image {
         display: block;
         border-radius: 6px; 
     }
+    figure {
+        display: block !important;
+    }
+}
+.media-item__item {
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1), 0 1px 5px rgba(0, 0, 0, 0.16);
+    margin-bottom: 2rem;
+    width: 100%;
+    //background-color: rgba(123,123,123,0.3);
+    figure {
+        display: block !important;
+        margin: 0 !important;
+    }
+    img {
+        display: block;
+    }
+}
+.media-item__item-label {
+    text-align: center;
+    display: block;
+    padding: 0.6rem 0;
+    opacity: 0.7;
+    font-family: 'Roboto';
+    font-size: 1.3rem;
 }
 
 // Styling for formatted preview popup
@@ -1516,5 +1584,12 @@ feature-image {
 .sd-media-carousel {
     &__thumb-strip-item {
         transition: none;
+    }
+}
+
+
+.sd-editor--theme-blue, .sd-editor--theme-dark {
+    .cropItems__item, .media-item__item {
+        outline: 1px solid rgba(255,255,255,.2);
     }
 }
