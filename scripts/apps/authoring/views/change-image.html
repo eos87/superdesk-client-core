@@ -1,10 +1,4 @@
 <div class="modal__header modal__header--flex">
-    <div class="modal__sliding-toolbar" ng-show="data.isDirty">
-        <div class="sliding-toolbar__inner"></div>
-        <a class="btn" ng-click="data.isDirty = false" translate>Cancel</a>
-        <a class="btn btn--primary" ng-click="done()" ng-disabled="!saveIsEnabled()">Save</a>
-    </div>
-
     <h3 class="modal__heading modal__heading--no-grow" ng-if="!nav || nav === 'view'">{{ :: activity.label }}</h3>
     <h3 class="modal__heading modal__heading--no-grow" ng-if="nav === 'image-edit'">{{ :: 'Edit image' | translate }}</h3>
     <h3 class="modal__heading modal__heading--no-grow" ng-if="nav === 'crop'">{{ :: 'Edit Crops' | translate }}</h3>
@@ -17,6 +11,7 @@
 
     <div class="modal__header-buttons modal__header-buttons--right">
         <button class="btn btn--ui-dark btn--hollow" ng-click="close()" ng-disabled="isAoISelectionModeEnabled">{{ 'Close' | translate }}</button>
+        <button class="btn btn--primary btn--hollow" ng-click="done()" ng-disabled="!saveIsEnabled() || isAoISelectionModeEnabled">{{ 'Save & Close' | translate }}</button>
     </div>
 </div>
 
@@ -36,9 +31,10 @@
                 <div class="sd-photo-preview__image">
 
                     <div class="modal-body__flex-loader" ng-if="loaderForAoI"></div>
+
                     <div sd-image-crop
                          data-show-min-size-error="true"
-                         data-src="data.item.renditions.viewImage.href"
+                         data-src="data.item.renditions.original.href"
                          data-original="data.item.renditions.original"
                          data-crop-data="areaOfInterestData"
                          data-on-change="enableSaveAreaOfInterest()"
@@ -46,7 +42,7 @@
                     </div>
 
                     <sd-image-modify
-                        data-src="data.item.renditions.viewImage.href"
+                        data-src="data.item.renditions.original.href"
                         data-brightness="controls.brightness"
                         data-contrast="controls.contrast"
                         data-grayscale="controls.grayscale"
