@@ -28,13 +28,13 @@
             </div>
 
             <div class="sd-photo-preview sd-photo-preview__edit-mode" ng-if="nav === 'image-edit'">
-                <div class="sd-photo-preview__image">
+                <div class="sd-photo-preview__image sd-photo-preview__image--no-flex">
 
                     <div class="modal-body__flex-loader" ng-if="loaderForAoI"></div>
 
                     <div sd-image-crop
                          data-show-min-size-error="true"
-                         data-src="data.item.renditions.original.href"
+                         data-src="data.item.renditions.viewImage.href"
                          data-original="data.item.renditions.original"
                          data-crop-data="areaOfInterestData"
                          data-on-change="enableSaveAreaOfInterest()"
@@ -49,14 +49,16 @@
                         data-rotate="controls.rotate"
                         ng-if="!isAoISelectionModeEnabled && !loaderForAoI">
                     </sd-image-modify>
-
-                    <label ng-if="isAoISelectionModeEnabled" class="sd-photo-preview__label">
-                        <span translate>New size</span>
-                        <span class="size">
-                            {{ areaOfInterestData.CropRight - areaOfInterestData.CropLeft}}
-                            x {{ areaOfInterestData.CropBottom - areaOfInterestData.CropTop}}
-                        </span>
-                    </label>
+                    <div>
+                        <label ng-if="isAoISelectionModeEnabled" class="sd-photo-preview__label">
+                            <span ng-if="isAoIDirty" translate>New size</span >
+                            <span ng-if="!isAoIDirty" translate>Original size</span>
+                            <span class="size">
+                                {{ areaOfInterestData.CropRight - areaOfInterestData.CropLeft}}
+                                x {{ areaOfInterestData.CropBottom - areaOfInterestData.CropTop}}
+                            </span>
+                        </label>
+                    </div>
                 </div>
             </div>
             <div class="sd-photo-preview sd-photo-preview__edit-mode" ng-if="nav === 'crop'">
@@ -210,30 +212,37 @@
                             <a class="btn" ng-click="showAreaOfInterestView(false)" translate>Cancel</a>
                             <a class="btn btn--primary" ng-click="saveAreaOfInterest(areaOfInterestData)" ng-disabled="!isAoIDirty" translate>Confirm crop</a>
                         </div>
+                        <h3 class="sd-slide-in-panel__heading sd-slide-in-panel__heading--marg-b16" translate>Change image settings</h3>
                         <div class="form__row">
-                            <button class="btn btn--ui-dark btn--hollow" ng-click="showAreaOfInterestView()">{{ 'Crop' | translate }}</button>
-                            <button class="btn btn--ui-dark btn--hollow" ng-click="controls.rotate = controls.rotate - 90">{{ 'Rotate left' | translate }}</button>
-                            <button class="btn btn--ui-dark btn--hollow" ng-click="controls.rotate = controls.rotate + 90">{{ 'Rotate right' | translate }}</button>
+                            <button class="btn btn--ui-dark btn--hollow btn--icon-only btn--large" ng-click="showAreaOfInterestView()" ng-class="{'btn--active' : isAoISelectionModeEnabled}" sd-tooltip="Crop"><i class="icon-crop icon--white"></i></button>
+                            <button class="btn btn--ui-dark btn--hollow btn--icon-only btn--large" ng-click="controls.rotate = controls.rotate - 90" sd-tooltip="Rotate left" ng-disabled="isAoISelectionModeEnabled"><i class="icon-rotate-left icon--white"></i></button>
+                            <button class="btn btn--ui-dark btn--hollow btn--icon-only btn--large" ng-click="controls.rotate = controls.rotate + 90" sd-tooltip="Rotate right" ng-disabled="isAoISelectionModeEnabled"><i class="icon-rotate-right icon--white"></i></button>
+                            <button class="btn btn--ui-dark btn--hollow btn--icon-only btn--large" ng-click="" sd-tooltip="Flip horizotal" ng-disabled="isAoISelectionModeEnabled"><i class="icon-flip-horizontal icon--white"></i></button>
+                            <button class="btn btn--ui-dark btn--hollow btn--icon-only btn--large" ng-click="" sd-tooltip="Flip vertical" ng-disabled="isAoISelectionModeEnabled"><i class="icon-flip-vertical icon--white"></i></button>
                         </div>
-                        <div class="form__row">
-                            <div class="sd-line-input sd-line-input--dark-ui">
-                                <label class="sd-line-input__label" translate>Brigtness {{controls.brightness}}</label>
-                                <input type="range" class="sd-slider__range" min=".5" max="1.5" step=".05" ng-model="controls.brightness" ng-dblclick="controls.brightness = 1">
+                    </div>
+                    <div class="sd-slide-in-panel__content-block" ng-if="!isAoISelectionModeEnabled">
+                        <h3 class="sd-slide-in-panel__heading sd-slide-in-panel__heading--marg-b20" translate>Adjust colors</h3>
+                        <div class="form__row form__row--small-padding">
+                            <div class="form-label__container">
+                                <label class="form-label" translate>Brigtness</label>
+                                <span class="form-label__info-block">{{controls.brightness}}%</span>
                             </div>
+                            <input type="range" class="sd-slider__range" min=".5" max="1.5" step=".05" ng-model="controls.brightness" ng-dblclick="controls.brightness = 1">
                         </div>
-
-                        <div class="form__row">
-                            <div class="sd-line-input sd-line-input--dark-ui">
-                                <label class="sd-line-input__label" translate>Contrast {{controls.contrast}}</label>
-                                <input type="range" class="sd-slider__range" min=".5" max="1.5" step=".05" ng-model="controls.contrast" ng-dblclick="controls.contrast = 1">
+                        <div class="form__row form__row--small-padding">
+                            <div class="form-label__container">
+                                <label class="form-label" translate>Contrast</label>
+                                <span class="form-label__info-block">{{controls.contrast}}%</span>
                             </div>
+                            <input type="range" class="sd-slider__range" min=".5" max="1.5" step=".05" ng-model="controls.contrast" ng-dblclick="controls.contrast = 1">
                         </div>
-
-                        <div class="form__row">
-                            <div class="sd-line-input sd-line-input--dark-ui">
-                                <label class="sd-line-input__label" translate>Grayscale {{controls.grayscale}}</label>
-                                <input type="range" class="sd-slider__range" min="0" max="15" step=".05" ng-model="controls.grayscale" ng-dblclick="controls.grayscale = 0">
+                        <div class="form__row form__row--small-padding">
+                            <div class="form-label__container">
+                                <label class="form-label" translate>Grayscale</label>
+                                <span class="form-label__info-block">{{controls.grayscale}}%</span>
                             </div>
+                            <input type="range" class="sd-slider__range" min="0" max="1" step=".05" ng-model="controls.grayscale" ng-dblclick="controls.grayscale = 0">
                         </div>
                     </div>
                 </div>

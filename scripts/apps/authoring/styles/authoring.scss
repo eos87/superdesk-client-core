@@ -1036,6 +1036,17 @@
         align-items: center;
         justify-content: center;
         flex-direction: column;
+        sd-image-modify {
+            text-align: center;
+            height:100%;
+            overflow:auto;
+            canvas {
+                max-width: 100%;
+                max-height: 100%;
+                height: auto;
+                margin: auto;
+            }
+        }
         &--with-strip {
             display: block;
             height:100%;
@@ -1047,12 +1058,31 @@
                 display: inline-block !important;
             }
         }
+        &--no-flex {
+            display: block;
+            div[sd-image-crop] {
+                display: inline-block !important;
+                .jcrop-tracker {
+                    display: inline-block !important;
+                }
+                img {
+                    // max-width: 100%;
+                    max-height: none;
+                    // height: auto;
+                    // margin: auto;
+                    //object-fit: contain;
+                }
+            }
+            .sd-photo-preview__label {
+                display: inline-block;
+            }
+        }
     }
 }
 // .sd-photo-preview__image--with-strip
 
 
-.sd-grid-item .sd-grid-item__thumb > div {
+.sd-grid-item .sd-grid-item__thumb > div:not(.sd-grid-item__checkbox) {
     position: relative;
     flex-grow: 0;
     flex-shrink: 0;
