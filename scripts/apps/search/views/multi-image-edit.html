@@ -1,0 +1,119 @@
+<div class="modal__header modal__header--flex">
+    <h3 class="modal__heading modal__heading--no-grow">{{ :: 'Edit metadata' | translate }}</h3>
+
+    <div class="modal__header-buttons  modal__header-buttons--center modal__header-element-grow button-nav"></div>
+
+    <div class="modal__header-buttons modal__header-buttons--right">
+        <button class="btn btn--ui-dark btn--hollow" ng-click="$close()">{{ 'Close' | translate }}</button>
+        <button class="btn btn--primary btn--hollow" ng-click="save()">{{ 'Save & Close' | translate }}</button>
+    </div>
+</div>
+
+<div class="modal__body modal__body--no-padding">
+    <div class="sd-column-box--2">
+        <div class="sd-column-box__main-column sd-column-box__main-column--photo-preview">
+            <div class="sd-photo-preview sd-photo-preview--grid-only">
+                <div class="sd-photo-preview__thumb-strip">
+                    <div class="sd-grid-list dark-ui">
+
+                        <div class="sd-grid-item sd-grid-item--with-click"
+                             ng-click="image.unselected = !image.unselected"
+                             ng-repeat="image in images track by image._id"
+                             ng-class="{'sd-grid-item--selected' : !image.unselected}">
+                            <div class="sd-grid-item__thumb">
+                                <img ng-src="{{image.renditions.thumbnail.href}}"/>
+                            </div>
+                            <div class="sd-grid-item__content">
+                                <time sd-absdate datetime="image.versioncreated"></time>
+                                <span class="sd-grid-item__slugline">{{image.headline}}</span>
+                            </div>
+                            <div class="sd-grid-item__footer">
+                                <div class="sd-grid-item__footer-block sd-grid-item__footer-block--multi-l">
+                                    <i class="icon-photo sd-grid-item__type-icn sd-grid-item__footer-block-item"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sd-column-box__slide-in-column sd-column-box__slide-in-column--large sd-column-box__slide-in-column--dark-ui">
+            <div class="sd-column-box__slide-in-column-inner sd-slide-in-panel">
+                <div class="sd-slide-in-panel__header">
+                    <h3 class="sd-slide-in-panel__heading" translate>Metadata</h3>
+                </div>
+                <div class="sd-slide-in-panel__content">
+                    <div class="sd-slide-in-panel__content-block sd-slide-in-panel__content-block--first">
+                        <div class="form__row" ng-if="validator.headline">
+                            <div class="sd-line-input sd-line-input--dark-ui sd-line-input--boxed" ng-class="{'sd-line-input--required':validator.headline.required}">
+                                <label class="sd-line-input__label" translate>Title</label>
+                                <input class="sd-line-input__input" type="text" ng-model="metadata.headline" ng-change="data.isDirty = true">
+                                <div class="sd-line-input__char-count" ng-if="validator.headline.maxlength" sd-character-count data-item="metadata.headline" data-limit="validator.headline.maxlength" data-html="true"></div>
+                            </div>
+                        </div>
+
+                        <div class="form__row" ng-if="validator.description_text">
+                            <div class="sd-line-input sd-line-input--dark-ui sd-line-input--boxed" ng-class="{'sd-line-input--required':validator.description_text.required}">
+                                <label class="sd-line-input__label" translate>Description</label>
+                                <textarea class="sd-line-input__input" ng-model="metadata.description_text" ng-change="data.isDirty = true" sd-auto-height></textarea>
+                                <div class="sd-line-input__char-count" ng-if="validator.description_text.maxlength" sd-character-count data-item="metadata.description_text" data-limit="validator.description_text.maxlength" data-html="true"></div>
+                            </div>
+                        </div>
+
+                        <div class="form__row" ng-if="validator.archive_description">
+                            <div class="sd-line-input sd-line-input--dark-ui sd-line-input--boxed" ng-class="{'sd-line-input--required':validator.archive_description.required}">
+                                <label class="sd-line-input__label" translate>Description</label>
+                                <textarea class="sd-line-input__input" ng-model="metadata.archive_description" ng-change="data.isDirty = true" sd-auto-height></textarea>
+                                <div class="sd-line-input__char-count" ng-if="validator.archive_description.maxlength" sd-character-count data-item="metadata.archive_description" data-limit="validator.archive_description.maxlength" data-html="true"></div>
+                            </div>
+                        </div>
+
+                        <div class="form__row" ng-if="validator.alt_text">
+                            <div class="sd-line-input sd-line-input--dark-ui sd-line-input--boxed" ng-class="{'sd-line-input--required':validator.alt_text.required}">
+                                <label class="sd-line-input__label" translate>Alt Text</label>
+                                <input class="sd-line-input__input" type="text" ng-model="metadata.alt_text" ng-change="data.isDirty = true">
+                                <div class="sd-line-input__char-count" ng-if="validator.alt_text.maxlength" sd-character-count data-item="metadata.alt_text" data-limit="validator.alt_text.maxlength" data-html="true"></div>
+                            </div>
+                        </div>
+
+                        <div class="form__row" ng-if="validator.byline">
+                            <div class="sd-line-input sd-line-input--dark-ui sd-line-input--boxed" ng-class="{'sd-line-input--required':validator.byline.required}">
+                                <label class="sd-line-input__label" translate>Credit</label>
+                                <input class="sd-line-input__input" type="text" ng-model="metadata.byline" ng-change="data.isDirty = true">
+                            </div>
+                        </div>
+
+                        <div class="form__row" ng-if="validator.copyrightholder">
+                            <div class="sd-line-input sd-line-input--dark-ui sd-line-input--boxed" ng-class="{'sd-line-input--required':validator.copyrightholder.required}">
+                                <label class="sd-line-input__label" translate>Copyright holder</label>
+                                <input class="sd-line-input__input" type="text" ng-model="metadata.copyrightholder" ng-change="data.isDirty = true">
+                            </div>
+                        </div>
+
+                        <div class="form__row" ng-if="validator.usageterms">
+                            <div class="sd-line-input sd-line-input--is-select sd-line-input--dark-ui sd-line-input--boxed" ng-class="{'sd-line-input--required':validator.usageterms.required}">
+                                <label class="sd-line-input__label" translate>Assign Rights</label>
+                                <select class="sd-line-input__select" ng-model="metadata.usageterms" ng-change="data.isDirty = true">
+                                    <option translate value=""></option> <!-- not selected / blank option -->
+                                    <option translate value="single-usage">Single Usage</option>
+                                    <option translate value="time-restricted">Time Restricted</option>
+                                    <option translate value="indefinite-usage">Indefinite Usage</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form__row" ng-if="validator.copyrightnotice">
+                            <div class="sd-line-input sd-line-input--dark-ui sd-line-input--boxed" ng-class="{'sd-line-input--required':validator.copyrightnotice.required}">
+                                <label class="sd-line-input__label" translate>Copyright notice</label>
+                                <input class="sd-line-input__input" type="text" ng-model="metadata.copyrightnotice" ng-change="data.isDirty = true">
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
