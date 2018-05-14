@@ -45,8 +45,10 @@
                         data-src="data.item.renditions.original.href"
                         data-brightness="controls.brightness"
                         data-contrast="controls.contrast"
-                        data-grayscale="controls.grayscale"
+                        data-saturate="controls.saturate"
                         data-rotate="controls.rotate"
+                        data-fliph="controls.fliph"
+                        data-flipv="controls.flipv"
                         ng-if="!isAoISelectionModeEnabled && !loaderForAoI">
                     </sd-image-modify>
                     <div>
@@ -217,8 +219,8 @@
                             <button class="btn btn--ui-dark btn--hollow btn--icon-only btn--large" ng-click="showAreaOfInterestView()" ng-class="{'btn--active' : isAoISelectionModeEnabled}" sd-tooltip="Crop"><i class="icon-crop icon--white"></i></button>
                             <button class="btn btn--ui-dark btn--hollow btn--icon-only btn--large" ng-click="controls.rotate = controls.rotate - 90" sd-tooltip="Rotate left" ng-disabled="isAoISelectionModeEnabled"><i class="icon-rotate-left icon--white"></i></button>
                             <button class="btn btn--ui-dark btn--hollow btn--icon-only btn--large" ng-click="controls.rotate = controls.rotate + 90" sd-tooltip="Rotate right" ng-disabled="isAoISelectionModeEnabled"><i class="icon-rotate-right icon--white"></i></button>
-                            <button class="btn btn--ui-dark btn--hollow btn--icon-only btn--large" ng-click="" sd-tooltip="Flip horizotal" ng-disabled="isAoISelectionModeEnabled"><i class="icon-flip-horizontal icon--white"></i></button>
-                            <button class="btn btn--ui-dark btn--hollow btn--icon-only btn--large" ng-click="" sd-tooltip="Flip vertical" ng-disabled="isAoISelectionModeEnabled"><i class="icon-flip-vertical icon--white"></i></button>
+                            <button class="btn btn--ui-dark btn--hollow btn--icon-only btn--large" ng-click="controls.fliph = controls.fliph === 'none' ? -1 : 'none'" sd-tooltip="Flip horizotal" ng-disabled="isAoISelectionModeEnabled"><i class="icon-flip-horizontal icon--white"></i></button>
+                            <button class="btn btn--ui-dark btn--hollow btn--icon-only btn--large" ng-click="controls.flipv = controls.flipv === 'none' ? -1 : 'none'" sd-tooltip="Flip vertical" ng-disabled="isAoISelectionModeEnabled"><i class="icon-flip-vertical icon--white"></i></button>
                         </div>
                     </div>
                     <div class="sd-slide-in-panel__content-block" ng-if="!isAoISelectionModeEnabled">
@@ -239,10 +241,10 @@
                         </div>
                         <div class="form__row form__row--small-padding">
                             <div class="form-label__container">
-                                <label class="form-label" translate>Grayscale</label>
-                                <span class="form-label__info-block">{{controls.grayscale}}%</span>
+                                <label class="form-label" translate>Saturation</label>
+                                <span class="form-label__info-block">{{controls.saturate}}%</span>
                             </div>
-                            <input type="range" class="sd-slider__range" min="0" max="1" step=".05" ng-model="controls.grayscale" ng-dblclick="controls.grayscale = 0">
+                            <input type="range" class="sd-slider__range" min=".5" max="1.5" step=".05" ng-model="controls.saturate" ng-dblclick="controls.saturate = 1">
                         </div>
                     </div>
                 </div>

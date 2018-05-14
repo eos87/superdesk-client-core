@@ -24,8 +24,10 @@ export function ChangeImageController($scope, gettext, notify, modal, _, api, $r
     $scope.controls = {
         brightness: 1,
         contrast: 1,
-        grayscale: 0,
-        rotate: 0
+        saturate: 1,
+        rotate: 0,
+        fliph: 'none',
+        flipv: 'none'
     };
 
     $scope.showMetadata = true;
